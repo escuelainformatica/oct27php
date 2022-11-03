@@ -1,4 +1,4 @@
-# Ejercicio
+# Ejercicio 27/oct
 
 * modifique la variable .env
   * puede copiar .env.example y modificar la base de datos
@@ -16,3 +16,10 @@ Terminar el ejercicio:
   * debe agregar en el log la operacion de la venta.
   * Todo esto hagalo dentro de una transaccion.
 
+# Ejercicio 3/Nov
+
+* En el proyecto anterior, modifique las páginas para que usen un dto.
+* Por lo tanto, cree lo siguiente
+  * Un dto que implemente las interfaces de json y jsonserializable
+  * una clase de servicio para dto, para poder crear los dtos con sus datos.
+  * Modifique el controlador y las vistas para enviar solo los dtos.
