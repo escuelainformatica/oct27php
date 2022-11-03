@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::any('/comprar',[\App\Http\Controllers\ProductoController::class,'compra']);
+Route::any('/comprar',[ProductoController::class,'compra']);
+Route::any('/modificar/{id}',[ProductoController::class,'modificarCompra']);

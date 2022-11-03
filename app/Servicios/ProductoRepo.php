@@ -14,6 +14,10 @@ class ProductoRepo {
         $compra=new Purchase(['idproduct'=>$idProducto,'provider'=>$provider,'quantity'=>$cantidad]);
         return $this->compra2($compra);
     }
+    public function modificarCompra(Purchase $compra): string {
+        $ok=$compra->save(); // insertar o actualizar.
+        return $ok?"":"la compra no se pudo modificar";
+    }
     public function compra2(Purchase $compra):string {
         // 1) modificar el stock del producto
         // 1.1) el producto existe?

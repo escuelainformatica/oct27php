@@ -5,12 +5,13 @@
     <title>Title</title>
 </head>
 <body>
+<h1>Modificar compra</h1>
     <form method="post">
         @csrf
         producto:<select name="product">
             <option >--Seleccione un producto--</option>
             @foreach($dto->productos as $prod)
-                <option value="{{$prod->id}}">{{$prod->name}}</option>
+                <option value="{{$prod->id}}" {{$dto->purchase->idproduct==$prod->id?"selected":""}} >{{$prod->name}}</option>
             @endforeach
         </select>
 
