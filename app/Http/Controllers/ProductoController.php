@@ -12,32 +12,51 @@ use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-    public function compra(Request $request,ProductoRepo $repo,PurchaseSrv $pserv) {
-        if($request->method()==='GET') {
+    public ProductoRepo $repo;
+    public PurchaseSrv $pserv;
+    public Request $request;
+
+    /**
+     * @param ProductoRepo $repo
+     * @param PurchaseSrv  $pserv
+     * @param Request      $request
+     */
+    public function __construct(ProductoRepo $repo, PurchaseSrv $pserv, Request $request)
+    {
+        $this->repo = $repo;
+        $this->pserv = $pserv;
+        $this->request = $request;
+    }
+
+
+    public function compra() {
+        if($this->request->method()==='GET') {
             $dto=PurchaseDTOSrv::crearDto();
             return view('producto.comprar',['dto'=>$dto]);
         } else { // se presiono el boton
-            $dto=PurchaseDTOSrv::crearDtoDesdeRequest($request,$pserv);
-            $dto->error=$repo->compra2($dto->purchase);
+            $dto=PurchaseDTOSrv::crearDtoDesdeRequest($this->request,$this->pserv);
+            $dto->error=$this->repo->compra2($dto->purchase);
             return view('producto.comprar',['dto'=>$dto]);
         }
     }
-    public function modificarCompra(Request $request,int $id,ProductoRepo $repo,PurchaseSrv $pserv) {
-        if($request->method()==='GET') {
+    public function modificarCompra(int $id) {
+        if($this->request->method()==='GET') {
             $dto=PurchaseDTOSrv::crearDtoDesdeId($id);
             return view('producto.modificarcomprar',['dto'=>$dto]);
         } else { // se presiono el boton
-            $dto=PurchaseDTOSrv::crearDtoDesdeRequest($request,$pserv);
-            $dto->error=$repo->modificarCompra($dto->purchase);
+            $dto=PurchaseDTOSrv::crearDtoDesdeRequest($this->request,$this->pserv);
+            $dto->error=$this->repo->modificarCompra($dto->purchase);
             return view('producto.modificarcomprar',['dto'=>$dto]);
         }
     }
-    public function compraapi(Request $request,ProductoRepo $repo,PurchaseSrv $pserv) {
-        $compra=$pserv->obtenerDatos($request);
-        $error=$repo->compra2($compra);
+    public function compraapi(): string
+    {
+        $compra=$this->pserv->obtenerDatos($this->request);
+        $error=$this->repo->compra2($compra);
         return $error===""?"Compra agregada exitosamente":$error;
     }
-    public function obtenerCompraApi(Request $request,$id) {
+    public function obtenerCompraApi(Request $request,$id): PurchaseDTO
+    {
 
         $dto=PurchaseDTOSrv::crearDtoDesdeId($id);
         return $dto;
